@@ -1,0 +1,43 @@
+﻿@page
+@model DespesasCartao.Pages.LoginModel
+@{
+    ViewData["titulo"] = "Acesso ao Sistema";
+}
+<div class="row justify-content-center">
+    <form class="form align-self-center" method="post" asp-asp-page="/Login">
+        <h1 class="mt-5 mb-3" style="font: normal">Identifique-se</h1>
+        <style type="text/css">
+            .val-summary ul{
+                list-style-type:none;
+                padding:0;
+                margin: 0
+            }
+        </style>
+        <div asp-validation-summary="ModelOnly" class="val-summary text-danger mb-3"></div>
+
+        <input asp-for="Dados.Email" class="form-control" placeholder="Digite seu E-mail" required autofocus />
+        <span asp-validation-for="Dados.Email" class="text-danger"></span>
+
+        <input asp-for="Dados.Senha" class="form-control mt-3" placeholder="Digite a senha" required />
+
+        <input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />
+
+        <div class="row mb-4">
+            <div class="col d-flex justify-content-center">
+                <div class="form-check">
+
+                </div>
+            </div>
+            <label asp-for="Dados.Lembrar">
+                <input type="checkbox" value="" checked asp-for="Dados.Lembrar" />
+                @Html.DisplayNameFor( m => m.Dados.Lembrar)
+            </label>
+        </div>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
+        <p class="mt-3">Ainda não é cadastrado ? <a href="/NovoUsuario">Clique Aqui</a>para se cadastrar</p>
+    </form>
+</div>
+@section Scripts {
+    <partial name="_validationScriptsPartial" />
+}

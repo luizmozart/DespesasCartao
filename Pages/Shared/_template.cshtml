@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" lang="pt-br" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quitanda Online :: Área Administrativa</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    
+ </head>
+<body>
+    <header class="bg-dark">
+        <div class="container">
+            <nav class="nav navbar-dark bg-dark navbar-expand-lg">
+                <a class="navbar-brand" href="#">Quitanda Online</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-item nav-link" asp-area="" asp-page="/Admin">Área Administrativa</a>
+                        <a class="nav-item nav-link" asp-area="" asp-page="/pageProduto/Index">Produto</a>
+                        <a class="nav-item nav-link" asp-area="" asp-page="/pageCliente/Listar">Cliente</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <div class="container" style="padding-bottom:72px;">
+        <main role="main" >
+            @RenderBody()
+        </main>
+    </div>
+    <footer class="footer bg-light text-center p-4 fixed-bottom">
+        <div class="container">
+            <span class="text-dark">Copyright &copy; 2023 - Todos os direitos reservados </span>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script defer src="https://friconix.com/cdn/friconix.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

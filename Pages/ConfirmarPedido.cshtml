@@ -1,0 +1,113 @@
+﻿@page
+@model DespesasCartao.Pages.ConfirmarPedidoModel
+@{
+    ViewData["titutlo"] = "Confirme seu Pedido";
+}
+<div class="card">
+    <div class="card-header bg-danger text-light">
+        <div class="row">
+            <div class="col-8">
+                <h4 class="m-0">
+                    @ViewData["titutlo"]
+                </h4>
+            </div>
+            <div class="col-4 text-right">
+                <a asp-page="/Index" class="btn btn-outline-light btn-sm pull-right">Continuar comprando</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        @if((Model.pedido != null) && (Model.pedido.ItensPedido.Count > 0))
+        {
+            @foreach (var item in Model.pedido.ItensPedido.OrderBy(ip => ip.Produto.Nome))
+            {
+                var caminhoArquivoImagem = System.IO.Path.Combine("img\\produto", item.IdProduto.ToString("D6") + ".jpg");
+
+                <div class="row")>
+                    <div class="col-sm-3 col-md-2 text-center mb-2 mb-sm-0">
+                        <img class="img-thumbnail" src="@caminhoArquivoImagem">
+                    </div>
+                    <div class="col-sm-9 col-md-4 col-lg-5 text-left">
+                        <h4 class="product-name"><strong>@item.Produto.Nome</strong></h4>
+                        <h4>
+                            <small>@item.Produto.Descricao</small>
+                        </h4>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-5">
+                        <div class="row">
+                            <div class="col-4 text-md-end pt-2 text-end">
+                                <h6>
+                                    <strong>
+                                        R$ @item.ValorUnitario.ToString("F2")
+                                        <span class="text-muted">x</span>
+                                        @item.Quantidade
+                                    </strong>
+                                </h6>
+
+                            </div>
+                            <div class="col-3 mr-auto text-end mt-1 text-muted"> 
+                                <b>R$ @item.ValorItem.ToString("F2")</b>
+                            </div>
+                            @* <div class="col-5">
+                                <div name="@item.IdProduto">
+                                    <input type="number" step="1" max="99" min="1"
+                                           value="@item.Quantidade" title="Quantidade"
+                                           class="border-dark px-1 input-spinner"
+                                           name="@item.IdProduto">
+                                </div>
+                            </div>
+                            <div class="col-3 text-right">
+                                <button type="button" class="btn btn-outline-danger btn-xs btn-del"
+                                        name="@item.IdProduto">
+                                    <i class="fi-xnsuxl-trash-bin"></i>
+                                </button>
+                            </div>
+                            <div class="col-9 mr-auto text-right mt-1 text-muted">
+                                <b id="@($"valorItem{item.IdProduto}")">R$ @item.ValorItem.ToString("F2")</b>
+                            </div> *@
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            }
+            <div class="row text-end">
+                <div class="col-sm-12">
+                    <h5 class="mb-3">Dados de Entrega</h5>
+                    <p>
+                        <b>@Model.cliente.Nome</b>
+                        <br />
+                        @Model.pedido.Endereco.Logradouro,
+                        @Model.pedido.Endereco.Numero,
+                        @Model.pedido.Endereco.Complemento,
+                        @Model.pedido.Endereco.Bairro
+                        <br />
+
+                        @Model.pedido.Endereco.Cidade / @Model.pedido.Endereco.Estado
+
+                        <br />
+
+                        CEP: @Model.pedido.Endereco.CEP.Insert(5,"-").Insert(2,".")
+                        <br />
+
+                        Referência : @(Model.pedido.Endereco.Referencia??"Nenhuma")
+                    </p>
+                </div>
+
+            </div>
+        }
+        else
+        {
+            <h3>Seu Carrinho de compras está vazio.</h3>
+        }
+    </div>
+    <div class="card-footer text-end">
+        <div class="pull-right">
+            <div class="pull-right mb-2">
+                <h4> Valor Total: <b id="valorPedido">R$ @(Model.pedido.ValorTotal.ToString("F2"))</b></h4>
+            </div>
+            <hr />
+            <a type="button" class="btn btn-success float-end" asp-page="/FinalizarPedido">Finalizar Pedido</a>
+        </div>
+    </div>
+</div>

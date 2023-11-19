@@ -1,0 +1,80 @@
+﻿@page
+@model DespesasCartao.Pages.PageCliente.ListarModel
+
+@{
+    ViewData["Title"] = "Listagem de Clientes";
+}
+<header>
+    <div class="container p-3">
+        <div class="row align-items-center">
+            <div class="col-sm-6"><h1>@ViewData["Title"]</h1></div>
+            <div class="col-sm-6 text-right"><a asp-page="incluir" class="btn btn-primary">Novo Cliente</a></div>
+        </div>
+        
+    </div>
+</header>
+<main class="container">
+    @if (Model.clientes.Count > 0)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(m => m.clientes[0].Nome)</th>
+                    <th>@Html.DisplayNameFor(m => m.clientes[0].CPF)</th>
+                    <th>@Html.DisplayNameFor(m => m.clientes[0].DataNascimento)</th>
+                    <th>@Html.DisplayNameFor(m => m.clientes[0].Email)</th>
+                    <th class="text-center">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.clientes)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                        <td>@Html.DisplayFor(modelItem => item.CPF)</td>
+                        <td>@Html.DisplayFor(modelItem => item.DataNascimento)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                        <td class="text-center">
+                            <a class="btn btn-primary btn-sm" asp-page="./alterar" 
+                              asp-route-id="@item.IdCliente"><i class="fi-xnsuxl-edit-solid"></i></a>
+                            <form class="d-inline-block" asp-page-handler="delete" asp-route-id="@item.IdCliente" method="post">
+                                <button class="btn btn-danger btn-sm" onclick="confirmarExclusao(this);"
+                                        type="button">
+                                    <i class="fi-xnsuxl-trash-bin"></i>
+                                </button>
+                            </form>
+                            @if (Model.EmailsAdmins.Contains(item.Email))
+                            {
+                                <form class="d-inline-block" asp-page-handler="deladmin"
+                                    asp-route-id="@item.IdCliente" method="post">
+                                    <button class="btn btn-warning btn-sm" type="submit" title="Remover Administradores">
+                                        <i class="fi-xnsuxl-user-solid"></i>
+                                    </button>
+                                </form>
+                            }
+                            else
+                            {
+                                <form class="d-inline-block" asp-page-handler="setadmin"
+                                      asp-route-id="@item.IdCliente" method="post">
+                                    <button class="btn btn-success btn-sm" type="submit" title="Adicionar Administradores">
+                                        <i class="fi-xnsuxl-user-shield-solid"></i>
+                                    </button>
+                                </form>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <h2>Não Há clientes cadastrados.</h2>
+    }
+</main>
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_customConfirme");
+    }
+
+}

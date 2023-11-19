@@ -1,0 +1,54 @@
+﻿@page
+@model DespesasCartao.Pages.PageProduto.IndexModel
+
+@{
+    ViewData["Title"] = "Listagem de Produtos";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a class="btn btn-success btn-sm" asp-page="Create">Adicionar</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Produto[0].Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Produto[0].Descricao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Produto[0].Preco)
+            </th>
+            <th class="d-none d-lg-table-cell">
+                @Html.DisplayNameFor(model => model.Produto[0].Estoque)
+            </th>
+            <th class="text-center"> Ação</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Produto) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descricao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Preco)
+            </td>
+            <td class="d-none d-lg-table-cell">
+                @Html.DisplayFor(modelItem => item.Estoque)
+            </td>
+            <td class="text-center">
+                <a class="btn btn-primary btn-sm" asp-page="./Edit" asp-route-id="@item.IdProduto"><i class="fi-xnsuxl-edit-solid">Editar</i></a> 
+                <a class="btn btn-info btn-sm" asp-page="./Details" asp-route-id="@item.IdProduto"><i class="fi-xnsuxl-detail-solid">Detalhe</i></a> 
+                <a class="btn btn-danger btn-sm" asp-page="./Delete" asp-route-id="@item.IdProduto"><i class="fi-xnsuxl-trash-bin">Excluir</i></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
